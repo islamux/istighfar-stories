@@ -1,0 +1,21 @@
+{
+  "ui": {
+    "storyListTitle": "Geschichtenliste",
+    "selectStoryPrompt": "Bitte wählen Sie eine Geschichte zum Anzeigen aus.",
+    "sourceLabel": "Quelle"
+  },
+  "stories": [
+    {
+      "id": "imam_ahmed_baker_story",
+      "title": "Imam Ahmad ibn Hanbal und der Bäcker",
+      "content": "Imam Ahmad ibn Hanbal kam in eine fremde Stadt, deren Bewohner ihn nicht kannten. Der Imam Ahmad ibn Hanbal ging zu einer Moschee, um dort zu schlafen, nachdem ihn große Müdigkeit überkommen hatte. Als der Wächter Imam Ahmad ibn Hanbal in der Moschee sah, weigerte er sich, ihm zu erlauben, dort zu schlafen. Da sagte Imam Ahmad zum Wächter: Ich werde nur dort schlafen, wo meine Füße stehen. Und Imam Ahmad schlief dort, wo seine Füße waren. Doch der Wächter zog Imam Ahmad weg und warf ihn aus der Moschee hinaus. Imam Ahmad war ein ehrwürdiger Scheich mit einer würdevollen Ausstrahlung, an dem die Zeichen der Askese und Frömmigkeit sichtbar waren. Ein Bäcker sah Imam Ahmad, als er die Moschee verließ und auf der Straße stand, und bot ihm an, mit ihm zu kommen und in seinem Haus zu schlafen. So ging Imam Ahmad in das Haus des Bäckers. Es war die Gewohnheit des Bäckers, um Vergebung zu bitten, während er den Teig knetete und das Brot buk. Als Imam Ahmad bemerkte, dass der Bäcker ständig um Vergebung bat, fragte er ihn, ob er für sein häufiges Bitten um Vergebung eine Frucht gefunden habe. Der Bäcker antwortete: Ja, bei Allah, jedes Gebet, das ich zu Allah sprach, wurde erhört, außer einem einzigen Gebet. Da fragte Imam Ahmad: Und welches ist dieses Gebet, das dir nicht erhört wurde? Der Bäcker sagte: Ich betete zu Allah, dass er mir Imam Ahmad ibn Hanbal zeigen möge. Da sagte der Imam zu ihm: Ich bin Ahmad ibn Hanbal, und bei Allah, ich wurde zu dir hingezogen.",
+      "source": "Diese Geschichte ist jedoch nicht authentisch über Imam Ahmad ibn Hanbal überliefert."
+    },
+    {
+      "id": "sister_istighfar_blessings",
+      "title": "Um Vergebung bitten bringt Segen und Versorgung: Die Geschichte einer Schwester",
+      "content": "Eine der Schwestern erzählt: Sie berichtet über die Erfahrung ihrer verheirateten Schwester. Die finanzielle Lage ihres Ehemannes war sehr schlecht, er hatte keine Arbeit, nicht einmal ein Auto besaß er. Meine Schwester sagt: Ich hörte über die Vorzüge des Bittens um Vergebung und beschloss, mindestens 1000 Mal am Tag um Vergebung zu bitten. Während ich arbeitete, ging und kam, bat ich um Vergebung. Eines Tages schaute ich eine Sendung auf dem Kanal Al-Majd und sie kündigten die Frage der Sendung an, da sagte ich mir, warum nehme ich nicht teil... und ich machte weiter mit der Teilnahme. Sie sagt: Ich fuhr fort, um Vergebung zu bitten, und ich betete, dass mein Herr uns ein Auto erleichtern möge, auch wenn nur gemietet. Sie sagt, es vergingen nur anderthalb Monate seit meinem Bitten um Vergebung und meinem Gebet, als der Moderator der Al-Majd-Sendung auf unser Handy anrief und sagte: Herzlichen Glückwunsch zum Gewinn eines Autos!! Ihr werdet es am Fest des Fastenbrechens abholen, so Allah will! Allah segne sie damit... und möge Allah ihnen das Gute davon geben und sie vor seinem Schaden bewahren. Zur gleichen Zeit, als wir das Auto gewannen, nachdem ich um Vergebung gebeten hatte, kam ein Heiratsantrag für meine Tochter von jemandem mit wunderbaren Eigenschaften. Der Barmherzige segne sie, und möge Allah es für sie zum Guten vollenden.",
+      "source": "Erfahrung, übertragen von einer Schwester"
+    }
+  ]
+}
