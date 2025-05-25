@@ -5,6 +5,7 @@ import StoryList from '../components/StoryList'; // Import StoryList
 import arabicData from '../locales/ar.json';
 import englishData from '../locales/en.json';
 import turkishData from '../locales/tr.json'; // Import Turkish data
+import frenchData from '../locales/fr.json'; // Import French data
 
 // Define the Story type matching StoryCardProps
 // (StoryCard.tsx already defines this, but for clarity in page.tsx or if it were separate)
@@ -22,8 +23,11 @@ interface UiStrings {
   sourceLabel: string;
 }
 
+// Define a type for language codes for better maintainability
+type LanguageCode = 'ar' | 'en' | 'tr' | 'fr';
+
 export default function Home() {
-  const [currentLanguage, setCurrentLanguage] = useState<'ar' | 'en' | 'tr'>('ar'); // Add 'tr'
+  const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('ar'); // Use LanguageCode
   const [allStories, setAllStories] = useState<Story[]>(
     arabicData.stories.length > 0 ? arabicData.stories : []
   );
@@ -37,10 +41,18 @@ export default function Home() {
     arabicData.stories.length > 0 ? arabicData.stories[0] : null
   );
 
-  const handleSetLanguage = (lang: 'ar' | 'en' | 'tr') => { // Add 'tr'
+  const handleSetLanguage = (lang: LanguageCode) => { // Use LanguageCode
     setCurrentLanguage(lang);
-    const newStories = lang === 'ar' ? arabicData.stories : lang === 'en' ? englishData.stories : turkishData.stories;
-    const newUiStrings = lang === 'ar' ? arabicData.ui : lang === 'en' ? englishData.ui : turkishData.ui;
+    const newStories = 
+      lang === 'ar' ? arabicData.stories : 
+      lang === 'en' ? englishData.stories : 
+      lang === 'tr' ? turkishData.stories : 
+      frenchData.stories;
+    const newUiStrings = 
+      lang === 'ar' ? arabicData.ui : 
+      lang === 'en' ? englishData.ui : 
+      lang === 'tr' ? turkishData.ui : 
+      frenchData.ui;
     
     setAllStories(newStories.length > 0 ? newStories : []);
     setCurrentUiStrings(newUiStrings || { storyListTitle: "Story List", selectStoryPrompt: "Please select a story.", sourceLabel: "Source" });
@@ -94,6 +106,12 @@ export default function Home() {
         >
           Türkçe
         </button>
+        <button 
+          onClick={() => handleSetLanguage('fr')} 
+          className={`px-4 py-2 ml-2 rounded transition-colors ${currentLanguage === 'fr' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600'}`}
+        >
+          Français
+        </button>
       </div>
 
       <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto mt-4">
@@ -103,13 +121,14 @@ export default function Home() {
             stories={allStories}
             currentStoryId={selectedStoryId}
             onStorySelect={handleStorySelected}
-            currentLanguage={currentLanguage}
-            uiStrings={currentUiStrings} // Pass uiStrings to StoryList
+            currentLanguage={currentLanguage} // Pass currentLanguage to StoryList
+            uiStrings={currentUiStrings} 
           />
         </div>
 
         {/* Story Content */}
-        <div className={`md:w-2/3 p-4 ${currentLanguage === 'ar' ? 'md:order-1' : (currentLanguage === 'tr' ? 'md:order-1' : 'md:order-2')}`}>
+        {/* Adjusted order for French (LTR) like English */}
+        <div className={`md:w-2/3 p-4 ${currentLanguage === 'ar' || currentLanguage === 'tr' ? 'md:order-1' : 'md:order-2'}`}>
           {currentStory ? (
             <StoryCard story={currentStory} sourceLabel={currentUiStrings.sourceLabel || 'Source:'} />
           ) : (

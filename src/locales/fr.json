@@ -1,0 +1,21 @@
+{
+  "ui": {
+    "storyListTitle": "Liste des histoires",
+    "selectStoryPrompt": "Veuillez sélectionner une histoire à afficher.",
+    "sourceLabel": "Source"
+  },
+  "stories": [
+    {
+      "id": "imam_ahmed_baker_story",
+      "title": "L'Imam Ahmed bin Hanbal et le Boulanger",
+      "content": "L'Imam Ahmed bin Hanbal arrive dans une ville étrangère où les habitants ne le connaissent pas. Après une grande fatigue, il se rend dans une mosquée pour se reposer. Cependant, lorsque le gardien voit l'Imam Ahmed, il refuse de le laisser dormir dans la mosquée. L'Imam Ahmed dit au gardien : 'Je vais juste dormir là où sont mes pieds', et il s'allonge. Mais le gardien traîne l'Imam Ahmed et le sort de la mosquée. L'Imam Ahmed était un cheikh imposant, pieux et ascétique. Un boulanger voit l'Imam Ahmed dans cet état dans la rue et lui propose de passer la nuit chez lui. L'Imam Ahmed se rend chez le boulanger. Le boulanger avait l'habitude de demander pardon à Allah (faire l'Istighfar) en pétrissant la pâte et en cuisant le pain. Lorsque l'Imam Ahmed remarque que le boulanger fait constamment l'Istighfar, il lui demande s'il a vu un quelconque fruit à cette pratique assidue. Le boulanger répond : 'Oui, par Allah, chaque invocation que j'ai faite à Allah a été exaucée, sauf une.' L'Imam Ahmed demande : 'Et quelle est cette invocation qui n'a pas été exaucée ?' Le boulanger dit : 'C'est d'avoir demandé à Allah de me montrer l'Imam Ahmed bin Hanbal.' Alors, l'Imam Ahmed lui dit : 'Je suis Ahmed bin Hanbal. Par Allah, j'ai été littéralement traîné jusqu'à toi.'",
+      "source": "Note : Cette histoire n'est pas authentiquement attribuée à l'Imam Ahmed bin Hanbal."
+    },
+    {
+      "id": "sister_istighfar_blessings",
+      "title": "Istighfar, Bénédictions et Subsistance : L'histoire d'une sœur",
+      "content": "Une sœur raconte l'expérience de sa sœur mariée. Son mari était dans une très mauvaise situation financière, sans travail, et n'avait même pas de voiture. Ma sœur dit : 'J'ai entendu parler des mérites de l'Istighfar (demande de pardon à Allah) et j'ai décidé de faire l'Istighfar au moins 1000 fois par jour. Je faisais l'Istighfar constamment, en travaillant, en allant et venant.' Un jour, j'ai regardé une émission sur la chaîne Al-Majd où ils annonçaient une question pour un concours. Je me suis dit : 'Pourquoi ne pas participer ?' et j'ai continué à participer. Elle raconte : 'J'ai persévéré dans l'Istighfar et je priais Allah de nous faciliter l'obtention d'une voiture, même en location.' Elle poursuit : 'À peine un mois et demi s'était écoulé depuis que j'avais commencé l'Istighfar et mes prières, que le présentateur de l'émission d'Al-Majd nous a appelés sur notre téléphone portable pour nous dire : 'Félicitations, vous avez gagné une voiture ! Vous la recevrez à l'Aïd al-Fitr, si Allah le veut !' Qu'Allah la leur bénisse, leur accorde ses bienfaits et les protège de son mal. Au moment même où nous avons gagné la voiture, grâce à mon Istighfar, un homme aux qualités merveilleuses s'est présenté pour ma fille. Qu'Allah le bénisse et que cela se concrétise pour eux de la meilleure des manières.'",
+      "source": "Expérience rapportée par une sœur"
+    }
+  ]
+}
