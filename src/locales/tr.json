@@ -1,0 +1,21 @@
+{
+  "ui": {
+    "storyListTitle": "Hikaye Listesi",
+    "selectStoryPrompt": "Lütfen görüntülemek için bir hikaye seçin.",
+    "sourceLabel": "Kaynak"
+  },
+  "stories": [
+    {
+      "id": "imam_ahmed_baker_story",
+      "title": "İmam Ahmed bin Hanbel ve Fırıncı",
+      "content": "İmam Ahmed bin Hanbel, sakinlerinin kendisini tanımadığı yabancı bir şehre gelir. Aşırı yorgunluktan sonra dinlenmek için bir camiye gider. Ancak cami görevlisi İmam Ahmed'i görünce camide uyumasına izin vermez. İmam Ahmed görevliye, 'Sadece ayaklarımın olduğu yerde uyuyacağım' der ve olduğu yere uzanır. Fakat görevli İmam Ahmed'i sürükleyerek camiden çıkarır. İmam Ahmed, heybetli, takva ve zühd sahibi bir şeyhtir. Yolda bir fırıncı, İmam Ahmed'i bu halde görür ve geceyi kendi evinde geçirmesini teklif eder. İmam Ahmed fırıncının evine gider. Fırıncının hamur yoğurup ekmek yaparken sürekli Allah'tan bağışlanma dileme (istiğfar) adeti vardır. İmam Ahmed, fırıncının sürekli istiğfar ettiğini fark edince ona, bu kadar çok istiğfar etmenin bir faydasını görüp görmediğini sorar. Fırıncı, 'Evet, Allah'a yemin ederim ki, ettiğim her dua kabul oldu, biri hariç' diye cevap verir. İmam Ahmed, 'Kabul olmayan duan nedir?' diye sorar. Fırıncı, 'Allah'tan İmam Ahmed bin Hanbel'i bana göstermesini istedim' der. Bunun üzerine İmam Ahmed, 'Ben Ahmed bin Hanbel'im. Allah'a yemin ederim ki, sana doğru sürüklendim' der.",
+      "source": "Not: Bu hikayenin İmam Ahmed bin Hanbel'e ait olduğu kesin olarak doğrulanmamıştır."
+    },
+    {
+      "id": "sister_istighfar_blessings",
+      "title": "İstiğfar, Bereket ve Rızık: Bir Kız Kardeşin Hikayesi",
+      "content": "Bir kız kardeş anlatıyor: Evli olan ablasının deneyimini paylaşıyor. Ablasının eşinin maddi durumu çok kötüydü, işi yoktu, hatta arabası bile yoktu. Ablam diyor ki: İstiğfarın faziletini duydum ve günde en az 1000 defa istiğfar etmeye karar verdim. Çalışırken, gidip gelirken sürekli istiğfar ediyordum. Bir gün Mecd kanalında bir program açtım ve bir yarışma sorusu duyurdular. Kendi kendime 'Neden katılmayayım ki?' dedim ve katılmaya devam ettim. Diyor ki: İstiğfara devam ettim ve Allah'tan bize kiralık bile olsa bir araba kolaylaştırması için dua ediyordum. İstiğfarıma ve duama başlayalı bir buçuk ay geçmemişti ki, Mecd kanalındaki program sunucusu telefonla arayıp 'Tebrikler, bir araba kazandınız! İnşallah Ramazan Bayramı'nda teslim alacaksınız!' dedi. Allah onlara mübarek etsin, hayrını versin, şerrinden korusun. Arabayı kazandığımız aynı dönemde, istiğfarım sayesinde kızıma harika özelliklere sahip biri talip oldu. Allah mübarek etsin ve onlar için hayırlısıyla tamamlasın.",
+      "source": "Bir kız kardeş tarafından aktarılan deneyim"
+    }
+  ]
+}

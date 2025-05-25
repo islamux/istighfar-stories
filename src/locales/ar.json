@@ -1,4 +1,9 @@
 {
+  "ui": {
+    "storyListTitle": "قائمة القصص",
+    "selectStoryPrompt": "الرجاء اختيار قصة لعرضها.",
+    "sourceLabel": "المصدر"
+  },
   "stories": [
     {
       "id": "imam_ahmed_baker_story",

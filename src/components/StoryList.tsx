@@ -6,22 +6,30 @@ interface Story {
   source?: string;
 }
 
+// Define UiStrings type matching the one in page.tsx
+interface UiStrings {
+  storyListTitle: string;
+  selectStoryPrompt: string;
+  sourceLabel: string;
+}
+
 interface StoryListProps {
   stories: Story[];
   currentStoryId: string | null;
   onStorySelect: (id: string) => void;
-  currentLanguage: 'ar' | 'en'; // To set text direction
+  currentLanguage: 'ar' | 'en' | 'tr'; // Updated to include 'tr'
+  uiStrings: UiStrings; // Added uiStrings prop
 }
 
-export default function StoryList({ stories, currentStoryId, onStorySelect, currentLanguage }: StoryListProps) {
+export default function StoryList({ stories, currentStoryId, onStorySelect, currentLanguage, uiStrings }: StoryListProps) {
   if (!stories || stories.length === 0) {
-    return <p className="text-gray-500 dark:text-gray-400">No stories available.</p>;
+    return <p className="text-gray-500 dark:text-gray-400">{uiStrings.selectStoryPrompt || "No stories available."}</p>;
   }
 
   return (
-    <div className={`w-full md:w-1/4 p-4 border-r border-gray-200 dark:border-gray-700 ${currentLanguage === 'ar' ? 'md:border-l md:border-r-0' : ''}`}>
+    <div className={`w-full md:w-1/3 p-4 border-gray-200 dark:border-gray-700 ${currentLanguage === 'ar' || currentLanguage === 'tr' ? 'md:border-l md:border-r-0 md:border-l-gray-200 md:dark:border-l-gray-700' : 'md:border-r md:border-r-gray-200 md:dark:border-r-gray-700'}`}>
       <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-        {currentLanguage === 'ar' ? 'قائمة القصص' : 'Story List'}
+        {uiStrings.storyListTitle}
       </h2>
       <ul className="space-y-2">
         {stories.map((story) => (

@@ -1,4 +1,9 @@
 {
+  "ui": {
+    "storyListTitle": "Story List",
+    "selectStoryPrompt": "Please select a story to display.",
+    "sourceLabel": "Source"
+  },
   "stories": [
     {
       "id": "imam_ahmed_baker_story",
