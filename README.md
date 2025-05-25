@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+``markdown
+# 🌟 Istigfar-Stories | قصص المستغفرين
 
-## Getting Started
+> تطبيق ويب تفاعلي يعرض قصص مستوحاة من فضل الاستغفار وتأثيره في حياة المسلمين، مقدم بثنائية اللغة (العربية والإنجليزية) مع خطة مستقبلية لإضافة المزيد من اللغات.
 
-First, run the development server:
+---
 
-```bash
+## 📌 نظرة عامة
+
+Istigfar-Stories هو مشروع تم تطويره باستخدام:
+- **Next.js** (لأداء فائق وتجربة مستخدم متقدمة)
+- **TypeScript** (لضمان جودة الكود وتقليل الأخطاء)
+- **Tailwind CSS** (لبناء واجهة عصرية، جذابة، ومتجاوبة بسهولة)
+
+يهدف التطبيق إلى نشر قصص واقعية أو مستوحاة عن فضل الاستغفار بحيث تلهم المستخدمين وتربطهم أكثر بفكرة الرحمة والمغفرة في الإسلام.
+
+---
+
+## 🚀 المميزات الرئيسية
+
+- 🌍 **دعم ثنائي اللغة (العربية والإنجليزية):** واجهة متوازنة من حيث التصميم والاتجاه (RTL وLTR)  
+- 🎨 **واجهة مستخدم جذابة وعصرية:** تصميم متجاوب مناسب لجميع الأجهزة  
+- ⚡ **أداء عالي بفضل Next.js وتقنيات التحميل الذكي**  
+- 📝 **سهولة إضافة لغات جديدة مستقبليًا** بهيكلة نصية منظمة (i18n)  
+- 📚 **تصفح سلس للقصص مع إمكانية البحث والتصفية**  
+- 🌐 **الدعم الكامل للاتجاهات (RTL للعربية وLTR للإنجليزية)** مع اهتمام كبير بالتجربة البصرية  
+
+---
+
+## 🛠️ التقنيات المستخدمة
+
+| التقنية            | الدور                              | الرابط                 |
+|--------------------|----------------------------------|-----------------------|
+| ![Next.js](https://img.icons8.com/color/48/000000/nextjs.png) Next.js      | إطار عمل React مع دعم SSR والـ SSG | https://nextjs.org      |
+| ![TypeScript](https://img.icons8.com/color/48/000000/typescript.png) TypeScript | لغة متقدمة مع typing صارم            | https://www.typescriptlang.org |
+| ![Tailwind CSS](https://img.icons8.com/color/48/000000/tailwind_css.png) Tailwind CSS | نظام CSS قائم على utility-first لتصميم مرن وفعّال | https://tailwindcss.com |
+
+---
+
+## 📂 هيكل المشروع (Structure)
+
+├── public/                  # ملفات ثابتة (صور، خطوط، إلخ)
+├── src/
+│   ├── components/          # مكونات UI قابلة لإعادة الاستخدام
+│   ├── pages/               # صفحات التطبيق (Next.js routing)
+│   ├── styles/              # ملفات Tailwind وCSS المخصصة
+│   ├── locales/             # ملفات الترجمات (i18n) للغات المختلفة
+│   ├── types/               # تعريفات TypeScript
+│   └── utils/               # أدوات مساعدة ودوال مشتركة
+├── next.config.js           # إعدادات Next.js
+├── tailwind.config.js       # إعدادات Tailwind CSS
+├── tsconfig.json            # إعدادات TypeScript
+├── package.json             # إدارة الحزم والسكربتات
+└── README.md                # هذا الملف
+Preview Code
+
+---
+
+## ⚙️ التشغيل المحلي
+
+### المتطلبات
+
+- Node.js v16+  
+- npm أو yarn
+
+### خطوات التشغيل
+
+bash
+# استنساخ المشروع
+git clone https://github.com/islamux/istigfar-stories.git
+cd istigfar-stories
+
+# تثبيت الحزم
+npm install
+# أو
+yarn install
+
+# تشغيل التطبيق في وضع التطوير
 npm run dev
-# or
+# أو
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# زيارة التطبيق عبر:
+http://localhost:3000
+Preview Code
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌐 دعم اللغات و i18n
 
-## Learn More
+- **مُدارة عبر ملفات JSON** في src/locales/
+- دعم حالة الـ RTL للغة العربية تلقائيًا باستخدام dir="rtl" داخل الـ  أو تطبيق CSS خاص
+- طريقة إضافة لغة جديدة:
+  1. إنشاء ملف ترجمة داخل locales/{language_code}.json
+  2. تحديث إعدادات i18n في next.config.js
+  3. توفير الترجمة لجميع النصوص
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 التصميم والتخصيص
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- يستخدم Tailwind CSS مع **dark mode** (اختياري)  
+- مُصمم ليتكيف مع الشاشات الصغيرة والكبيرة بنفس جودة عرض المحتوى  
+- إمكانية إضافة أنيميشنات بسيطة عبر مكتبات Tailwind Plugins  
+- الخطوط العربية والإنجليزية معتمدة من Google Fonts (مثل Cairo أو Noto Kufi Arabic)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧩 تطوير مستقبلي (Roadmap)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] إضافة المزيد من اللغات (فرنسي، أوردو، إندونيسي...)  
+- [ ] تحسين قسم التفاعل مع القصص (تعليقات، مشاركة)  
+- [ ] تنظيم القصص حسب الفئة (توبة، شكر، صبر، توفيق...)  
+- [ ] نظام حسابات للمستخدمين لإضافة قصصهم وتجاربهم  
+- [ ] إمكانية التبرع أو دعم المشروع لجعل استمراريته ممكنة  
+
+---
+
+## 🤝 المساهمة
+
+مرحبًا بمساهمتك ✨  
+للمشاركة أو الإبلاغ عن مشكلات، استخدم نظام الـ Issues وPull Requests في GitHub.  
+يرجى الالتزام بإرشادات المساهمة المتوفرة في CONTRIBUTING.md (إذا تم إضافته مستقبلاً).
+
+---
+
+## 📄 الترخيص (License)
+
+تم ترخيص هذا المشروع تحت رخصة **GNU GPL3 License** — راجع ملف LICENSE للمزيد.
+
+---
+
+## ✉️ تواصل معي
+
+- GitHub: [@islamux](https://github.com/islamux)  
+- الإيميل: email@example.com  
+
+---
+
+> بارك الله فيكم ونفع بهذا التطبيق الجميع ✨
+
+---
+``
+
+إذا تريدني أساعدك بفريمورك i18n المفضل أو أكواد لجزء معين من المشروع، أعطيني إشارة.
