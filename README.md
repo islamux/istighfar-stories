@@ -133,7 +133,7 @@ Preview Code
 ## ✉️ تواصل معي
 
 - GitHub: [@islamux](https://github.com/islamux)  
-- الإيميل: email@example.com  
+- الإيميل: fathi733@gmail.com  
 
 ---
 
