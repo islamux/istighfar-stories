@@ -6,6 +6,7 @@ import arabicData from '../locales/ar.json';
 import englishData from '../locales/en.json';
 import turkishData from '../locales/tr.json'; // Import Turkish data
 import frenchData from '../locales/fr.json'; // Import French data
+import spanishData from '../locales/es.json'; // Import Spanish data
 
 // Define the Story type matching StoryCardProps
 // (StoryCard.tsx already defines this, but for clarity in page.tsx or if it were separate)
@@ -24,7 +25,7 @@ interface UiStrings {
 }
 
 // Define a type for language codes for better maintainability
-type LanguageCode = 'ar' | 'en' | 'tr' | 'fr';
+type LanguageCode = 'ar' | 'en' | 'tr' | 'fr' | 'es'; // Add 'es'
 
 export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('ar'); // Use LanguageCode
@@ -47,12 +48,14 @@ export default function Home() {
       lang === 'ar' ? arabicData.stories : 
       lang === 'en' ? englishData.stories : 
       lang === 'tr' ? turkishData.stories : 
-      frenchData.stories;
+      lang === 'fr' ? frenchData.stories : 
+      spanishData.stories; // Add spanishData
     const newUiStrings = 
       lang === 'ar' ? arabicData.ui : 
       lang === 'en' ? englishData.ui : 
       lang === 'tr' ? turkishData.ui : 
-      frenchData.ui;
+      lang === 'fr' ? frenchData.ui : 
+      spanishData.ui; // Add spanishData
     
     setAllStories(newStories.length > 0 ? newStories : []);
     setCurrentUiStrings(newUiStrings || { storyListTitle: "Story List", selectStoryPrompt: "Please select a story.", sourceLabel: "Source" });
@@ -112,6 +115,12 @@ export default function Home() {
         >
           Français
         </button>
+        <button 
+          onClick={() => handleSetLanguage('es')} 
+          className={`px-4 py-2 ml-2 rounded transition-colors ${currentLanguage === 'es' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600'}`}
+        >
+          Español
+        </button>
       </div>
 
       <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto mt-4">
@@ -121,13 +130,13 @@ export default function Home() {
             stories={allStories}
             currentStoryId={selectedStoryId}
             onStorySelect={handleStorySelected}
-            currentLanguage={currentLanguage} // Pass currentLanguage to StoryList
+            currentLanguage={currentLanguage}
             uiStrings={currentUiStrings} 
           />
         </div>
 
         {/* Story Content */}
-        {/* Adjusted order for French (LTR) like English */}
+        {/* Spanish is LTR, so it follows the same ordering as English and French */}
         <div className={`md:w-2/3 p-4 ${currentLanguage === 'ar' || currentLanguage === 'tr' ? 'md:order-1' : 'md:order-2'}`}>
           {currentStory ? (
             <StoryCard story={currentStory} sourceLabel={currentUiStrings.sourceLabel || 'Source:'} />

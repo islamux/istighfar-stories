@@ -1,0 +1,21 @@
+{
+  "ui": {
+    "storyListTitle": "Lista de historias",
+    "selectStoryPrompt": "Por favor, seleccione una historia para mostrar.",
+    "sourceLabel": "Fuente"
+  },
+  "stories": [
+    {
+      "id": "imam_ahmed_baker_story",
+      "title": "El Imam Ahmed bin Hanbal y el Panadero",
+      "content": "El Imam Ahmed bin Hanbal llega a una ciudad extraña donde los habitantes no lo conocen. Después de una gran fatiga, se dirige a una mezquita para descansar. Sin embargo, cuando el guardián ve al Imam Ahmed, se niega a dejarlo dormir en la mezquita. El Imam Ahmed le dice al guardián: 'Solo voy a dormir donde están mis pies', y se acuesta. Pero el guardián arrastra al Imam Ahmed y lo saca de la mezquita. El Imam Ahmed era un jeque imponente, piadoso y asceta. Un panadero ve al Imam Ahmed en este estado en la calle y le ofrece pasar la noche en su casa. El Imam Ahmed va a la casa del panadero. El panadero tenía la costumbre de pedir perdón a Alá (hacer Istighfar) mientras amasaba la masa y horneaba el pan. Cuando el Imam Ahmed se da cuenta de que el panadero hace Istighfar constantemente, le pregunta si ha visto algún fruto de esta práctica asidua. El panadero responde: 'Sí, por Alá, cada invocación que he hecho a Alá ha sido respondida, excepto una.' El Imam Ahmed pregunta: '¿Y cuál es esa invocación que no ha sido respondida?' El panadero dice: 'Es haberle pedido a Alá que me muestre al Imam Ahmed bin Hanbal.' Entonces, el Imam Ahmed le dice: 'Soy Ahmed bin Hanbal. Por Alá, he sido literalmente arrastrado hasta ti.'",
+      "source": "Nota: Esta historia no se atribuye auténticamente al Imam Ahmed bin Hanbal."
+    },
+    {
+      "id": "sister_istighfar_blessings",
+      "title": "Istighfar, Bendiciones y Sustento: La historia de una hermana",
+      "content": "Una hermana cuenta la experiencia de su hermana casada. El marido de su hermana estaba en una situación económica muy mala, sin trabajo, y ni siquiera tenía coche. Mi hermana dice: 'Oí hablar de los méritos del Istighfar (pedir perdón a Alá) y decidí hacer Istighfar al menos 1000 veces al día. Hacía Istighfar constantemente, mientras trabajaba, iba y venía.' Un día, estaba viendo un programa en el canal Al-Majd cuando anunciaron una pregunta para un concurso. Me dije: '¿Por qué no participar?' y seguí participando. Ella cuenta: 'Perseveré en el Istighfar y rezaba a Alá para que nos facilitara conseguir un coche, aunque fuera de alquiler.' Continúa: 'Apenas había pasado un mes y medio desde que empecé con el Istighfar y mis oraciones, cuando el presentador del programa de Al-Majd nos llamó a nuestro móvil para decirnos: '¡Felicidades, han ganado un coche! ¡Lo recibirán en el Eid al-Fitr, si Alá quiere!' Que Alá se lo bendiga, les conceda sus beneficios y los proteja de su mal. En el mismo momento en que ganamos el coche, gracias a mi Istighfar, un hombre con cualidades maravillosas se presentó para mi hija. Que Alá lo bendiga y que esto se concrete para ellos de la mejor manera.'",
+      "source": "Experiencia narrada por una hermana"
+    }
+  ]
+}
