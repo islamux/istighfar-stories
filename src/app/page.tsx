@@ -1,6 +1,7 @@
+"use client";
 import Image from "next/image";
 import { useState } from 'react';
-import { stories, Story } from "../../data/stories";
+import { stories } from "@/data/stories";
 
 export default function Home() {
   const [selectedStoryId, setSelectedStoryId] = useState<number | null>(null);
