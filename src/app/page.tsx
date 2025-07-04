@@ -17,7 +17,7 @@ export default function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-4 sm:p-8 md:p-12 lg:p-20 bg-gray-50 dark:bg-gray-900 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start w-full max-w-5xl">
         <div className="story-titles-list w-full bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-          <h2 className="text-2xl font-bold mb-6 text-center sm:text-left text-gray-800 dark:text-gray-100">Select a Story</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center sm:text-left text-gray-800 dark:text-gray-100">اختر قصة </h2>
           {stories.map(story => (
             <button
               key={story.id}
