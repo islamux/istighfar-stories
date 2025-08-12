@@ -1,0 +1,6 @@
+tree ef90386039a7491f4e3301a975f9c77b7aac3810
+parent dd808b8a53e6f3e34b540e0f7d1000d65a61ae19
+author islamux <fathi733l@gmail.com> 1748527594 +0300
+committer islamux <fathi733l@gmail.com> 1748527594 +0300
+
+Stop tracking .gitignore

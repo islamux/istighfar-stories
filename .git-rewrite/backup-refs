@@ -1,0 +1,14 @@
+9f47f9324cb21dd25371308420f905ed91b2b295 commit	refs/heads/feature/arabic-stories-translations
+26b9df2a4e74d353b1c1834867a7353cbe77637a commit	refs/heads/main
+205352c7ef20258b6f83bbe3c5cdb0590c7574bd commit	refs/heads/project-init-docs
+8a35999f5f97d3f0313e77ee13049b51e483c73d commit	refs/original/refs/heads/feature/arabic-stories-translations
+9b03ddc652fbfc0f99638a90376ad6d92b84d71c commit	refs/original/refs/heads/main
+9615bf04bdc302e59bb73413d5b3307731d85653 commit	refs/original/refs/heads/project-init-docs
+36db14e0e0e63c136de6192256cd56e3fbad2df8 commit	refs/original/refs/remotes/origin/feature/arabic-stories-translations
+19ab9ad7a3b97c4dbea32253b68b54518bef16ef commit	refs/original/refs/remotes/origin/main
+678e654135a2a8c43a12fb6c86373b6d327e4271 commit	refs/original/refs/remotes/origin/project-init-docs
+19ab9ad7a3b97c4dbea32253b68b54518bef16ef commit	refs/original/refs/remotes/origin2/main
+36db14e0e0e63c136de6192256cd56e3fbad2df8 commit	refs/remotes/origin/feature/arabic-stories-translations
+19ab9ad7a3b97c4dbea32253b68b54518bef16ef commit	refs/remotes/origin/main
+678e654135a2a8c43a12fb6c86373b6d327e4271 commit	refs/remotes/origin/project-init-docs
+f88c89d0e6b2e60a8f1b1214d5501d754b4ae428 commit	refs/remotes/origin2/main
