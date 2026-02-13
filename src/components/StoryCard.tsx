@@ -54,7 +54,13 @@ export function StoryCard({ story, language, onClick }: StoryCardProps) {
             <span className="font-medium">{story.source}</span>
             {story.author && <span className="ml-1">{story.author}</span>}
           </div>
-          <button className={`text-sm font-medium text-primary hover:text-accent transition-colors font-arabic-ui ${isRtl ? 'mr-auto' : 'ml-auto'}`}>
+          <button 
+            className={`text-sm font-medium text-primary hover:text-accent transition-colors font-arabic-ui ${isRtl ? 'mr-auto' : 'ml-auto'}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick?.(story);
+            }}
+          >
             {language === 'ar' ? 'اقرأ المزيد →' : 'Read more →'}
           </button>
         </div>
