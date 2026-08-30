@@ -2,17 +2,23 @@
 
 import { useTheme } from 'next-themes';
 import { Moon, Sun, Monitor } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
+const emptySubscribe = () => () => {};
+
+function useMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
 export function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   if (!mounted) {
     return (
@@ -55,11 +61,7 @@ export function ThemeToggle() {
 
 export function ThemeSelector() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   if (!mounted) {
     return (

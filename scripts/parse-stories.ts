@@ -35,9 +35,7 @@ function extractSection(body: string, sectionName: string): string {
   return '';
 }
 
-function buildContent(body: string, filename: string): string {
-  let content = body;
-  
+function buildContent(body: string): string {
   const mansha = extractSection(body, 'المحنة');
   const tahawol = extractSection(body, 'نقطة التحول');
   const natiga = extractSection(body, 'النتيجة');
@@ -133,7 +131,7 @@ function processStoryFile(filename: string, index: number): StoryData | null {
     const fileContent = readFileSync(filePath, 'utf8');
     
     const parsed = matter(fileContent);
-    const frontmatter = parsed.data as any;
+    const frontmatter = parsed.data as { title?: string };
     const body = parsed.content;
     
     if (!frontmatter.title) {
@@ -144,7 +142,7 @@ function processStoryFile(filename: string, index: number): StoryData | null {
     const mainTitleMatch = body.match(/^#\s+(.+)$/m);
     const mainTitle = mainTitleMatch ? mainTitleMatch[1].trim() : '';
     
-    const content = buildContent(body, filename);
+    const content = buildContent(body);
     const category = inferCategory(filename, frontmatter.title);
     const excerpt = extractExcerpt(content);
     const wordCount = content.split(/\s+/).length;
