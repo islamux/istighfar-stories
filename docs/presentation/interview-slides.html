@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Istigfar-Stories — Technical Interview Presentation</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --bg-2: #101a2e;
+    --panel: rgba(255,255,255,0.04);
+    --panel-2: rgba(255,255,255,0.08);
+    --border: rgba(148,163,184,0.18);
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --primary: #22c55e;
+    --primary-2: #16a34a;
+    --amber: #f59e0b;
+    --sky: #38bdf8;
+    --rose: #fb7185;
+    --violet: #a78bfa;
+    --code-bg: #081020;
+    --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: radial-gradient(1200px 800px at 15% -10%, #13233f 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  .toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 46px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(11,18,32,0.82); backdrop-filter: blur(8px);
+  }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--muted); }
+  .brand em { color: var(--primary); font-style: normal; }
+  .toolbar-right { display: flex; align-items: center; gap: 12px; }
+  .kbd { font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; }
+  #counter { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  button.nav-btn {
+    background: var(--panel); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 12px; font-size: 13px; cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  button.nav-btn:hover { background: var(--panel-2); border-color: var(--primary); }
+  #progress {
+    position: fixed; top: 46px; left: 0; height: 3px; z-index: 51;
+    background: linear-gradient(90deg, var(--primary), #86efac);
+    width: 0%; transition: width 0.25s ease;
+    border-radius: 0 3px 3px 0;
+  }
+
+  #deck { padding: 62px 40px 40px; height: 100vh; overflow: hidden; }
+  .slide {
+    display: none; opacity: 0;
+    max-width: 1180px; margin: 0 auto;
+    height: calc(100vh - 100px);
+    overflow-y: auto; overflow-x: hidden;
+    padding: 30px 42px;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .slide::-webkit-scrollbar { width: 8px; }
+  .slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .slide.active { display: block; opacity: 1; animation: fade 0.35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .kicker {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary);
+    border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+    border-radius: 999px; padding: 4px 12px; margin-bottom: 16px;
+  }
+  h1.slide-title { font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.15; margin-bottom: 12px; font-weight: 800; letter-spacing: -0.02em; }
+  h2.slide-title { font-size: clamp(1.4rem, 2.6vw, 2.1rem); line-height: 1.2; margin-bottom: 10px; font-weight: 800; letter-spacing: -0.01em; }
+  .subtitle { color: var(--muted); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.55; margin-bottom: 22px; max-width: 900px; }
+  .lead { color: var(--text); }
+  h3 { font-size: 1.02rem; font-weight: 700; color: var(--sky); margin: 18px 0 8px; }
+  h4 { font-size: 0.92rem; font-weight: 700; color: var(--amber); margin: 14px 0 6px; }
+
+  p, li { font-size: 0.98rem; line-height: 1.65; color: var(--text); }
+  li { margin-bottom: 6px; }
+  ul, ol { padding-left: 20px; }
+  .muted { color: var(--muted); }
+  .accent { color: var(--primary); }
+  .strong { font-weight: 700; }
+  .small { font-size: 0.85rem; }
+  .grid { display: grid; gap: 14px; }
+  .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .grid.cols-4 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .card .ttl { font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .card .ttl.sky { color: var(--sky); }
+  .card .ttl.amber { color: var(--amber); }
+  .card .ttl.rose { color: var(--rose); }
+  .card .ttl.violet { color: var(--violet); }
+  .card p, .card li { font-size: 0.9rem; }
+  .card ul { padding-left: 14px; }
+
+  pre {
+    position: relative; background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 26px 18px 16px; margin: 10px 0;
+    font-family: var(--mono); font-size: 0.82rem; line-height: 1.6;
+    overflow-x: auto; color: #d6e2f0;
+  }
+  pre::before {
+    content: attr(data-file);
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 6px 14px; font-size: 0.72rem; font-family: inherit;
+    color: var(--muted); background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid var(--border); border-radius: 12px 12px 0 0;
+    letter-spacing: 0.04em;
+  }
+  pre .c { color: #64748b; font-style: italic; }
+  pre .k { color: #93c5fd; }   /* keyword */
+  pre .s { color: #a5f3a5; }   /* string */
+  pre .t { color: #f9d76c; }   /* type */
+  pre .n { color: #7dd3fc; }   /* name/decl */
+  pre .u { color: #f0abfc; }   /* util */
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 10px 0; }
+  th { text-align: left; color: var(--primary); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 8px 10px; border-bottom: 2px solid var(--border); }
+  td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  tr:hover td { background: var(--panel); }
+
+  .chip { display: inline-block; font-size: 0.72rem; font-weight: 700; border-radius: 999px; padding: 3px 10px; margin: 2px 4px 2px 0; border: 1px solid var(--border); color: var(--muted); }
+  .chip.green { color: #86efac; border-color: rgba(34,197,94,0.4); }
+  .chip.sky { color: #7dd3fc; border-color: rgba(56,189,248,0.4); }
+  .chip.amber { color: #fcd34d; border-color: rgba(245,158,11,0.4); }
+  .chip.rose { color: #fda4af; border-color: rgba(251,113,133,0.4); }
+  .chip.violet { color: #c4b5fd; border-color: rgba(167,139,250,0.4); }
+
+  .qa { margin-bottom: 12px; }
+  .qa .q { font-weight: 700; color: var(--amber); font-size: 0.98rem; margin-bottom: 4px; }
+  .qa .q::before { content: "Q"; display: inline-block; margin-right: 8px; color: var(--bg); background: var(--amber); border-radius: 5px; padding: 1px 7px; font-size: 0.75rem; font-weight: 800; }
+  .qa ul { margin-top: 4px; }
+
+  .flow { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .node {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; font-size: 0.8rem; text-align: center; min-width: 120px;
+  }
+  .node b { display: block; font-size: 0.8rem; margin-bottom: 2px; }
+  .node span { color: var(--muted); font-size: 0.72rem; }
+  .arrow { display: flex; align-items: center; color: var(--primary); font-weight: 800; font-size: 1.05rem; }
+  .node.hl { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, transparent); }
+
+  .arch-box { border: 1px dashed var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
+  .arch-box .lbl { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .arch-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+  .arch-item { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+  .arch-item b { font-size: 0.84rem; display: block; margin-bottom: 2px; }
+  .arch-item span { font-size: 0.72rem; color: var(--muted); }
+  .badge-holder { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .pill { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(56,189,248,0.15); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.3); }
+  .pill.green { background: rgba(34,197,94,0.15); color: #86efac; border-color: rgba(34,197,94,0.3); }
+  .pill.amber { background: rgba(245,158,11,0.15); color: #fcd34d; border-color: rgba(245,158,11,0.3); }
+  .pill.rose { background: rgba(251,113,133,0.15); color: #fda4af; border-color: rgba(251,113,133,0.3); }
+  .pill.violet { background: rgba(167,139,250,0.15); color: #c4b5fd; border-color: rgba(167,139,250,0.3); }
+
+  /* Title slide */
+  .hero { text-align: center; padding-top: 6vh; }
+  .hero .logo {
+    width: 84px; height: 84px; margin: 0 auto 22px; border-radius: 24px;
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px; box-shadow: 0 12px 40px rgba(34,197,94,0.35);
+  }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 8px; }
+  .hero .arabic { font-size: clamp(1.4rem, 3vw, 2.2rem); color: var(--muted); direction: rtl; margin-bottom: 18px; font-weight: 600; }
+  .hero .tagline { font-size: clamp(1rem, 1.6vw, 1.25rem); color: var(--text); max-width: 720px; margin: 0 auto 22px; line-height: 1.55; }
+  .hero .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 26px; }
+  .hero .meta b { color: var(--text); }
+  .hero .tech { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 32px; }
+  .hero .tech span {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 8px 14px; font-family: var(--mono); font-size: 0.78rem; color: var(--text);
+  }
+  .hero .tech span em { color: var(--primary); font-style: normal; }
+  .hero .cta { font-size: 0.85rem; color: var(--muted); }
+
+  /* Notes */
+  #notes {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+    max-height: 38vh; overflow-y: auto;
+    background: #f8fafc; color: #0f172a; border-top: 3px solid var(--amber);
+    padding: 14px 22px; font-size: 0.86rem; line-height: 1.55;
+    transform: translateY(110%); transition: transform 0.25s ease;
+  }
+  #notes.open { transform: translateY(0); }
+  #notes h5 { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #b45309; margin-bottom: 6px; font-weight: 800; }
+  #notes p { color: #0f172a; font-size: 0.86rem; }
+
+  footer.hint {
+    position: fixed; bottom: 10px; right: 16px; z-index: 40;
+    font-size: 0.72rem; color: var(--muted); letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 760px) {
+    #deck { padding: 56px 14px; }
+    .slide { padding: 22px 16px; }
+    .grid.cols-2, .grid.cols-3, .grid.cols-4, .arch-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { overflow: visible; background: #fff; color: #111; }
+    .toolbar, #progress, footer.hint, #notes, #navBtns { display: none !important; }
+    #deck { padding: 0; height: auto; overflow: visible; }
+    .slide { display: block !important; opacity: 1 !important; page-break-after: always; break-after: page; height: auto; max-height: none; overflow: visible; padding: 24px; }
+    * { color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="brand"><em>Istigfar-Stories</em> · Technical Interview Presentation</div>
+  <div class="toolbar-right">
+    <span class="kbd">← →</span><span class="kbd">Space</span>
+    <button id="notesBtn" class="nav-btn" title="Toggle presenter notes (N)">Notes <span class="kbd">N</span></button>
+    <span id="counter">1 / 18</span>
+  </div>
+</div>
+<div id="progress"></div>
+
+<main id="deck">
+
+  <!-- ============ 1. TITLE ============ -->
+  <section class="slide" data-notes="Open with your name, the project, and a one-line elevator pitch. Then demo the live app for 60–90 seconds before moving on. Set the tone: this is a production-quality side project you chose carefully.">
+    <div class="hero">
+      <div class="logo">🌙</div>
+      <h1>Istigfar-Stories</h1>
+      <div class="arabic">قصص المستغفرين</div>
+      <p class="tagline">A bilingual (Arabic · English) web application that presents inspiring Islamic stories about <strong>seeking forgiveness</strong> with beautiful Arabic typography, full RTL/LTR support, and a modern React stack.</p>
+      <div class="meta">Presented by <b>[Your Name]</b> · Full-Stack / Frontend Engineer · <b>[Your Email]</b></div>
+      <div class="tech">
+        <span><em>Next.js</em> 16 · App Router</span>
+        <span><em>React</em> 19</span>
+        <span><em>TypeScript</em> 6 strict</span>
+        <span><em>Tailwind</em> CSS v4</span>
+        <span><em>next-themes</em></span>
+        <span><em>next/font</em></span>
+      </div>
+      <div class="cta">Live demo at the end · ~20 minute walkthrough · then Q&amp;A</div>
+    </div>
+  </section>
+
+  <!-- ============ 2. AGENDA ============ -->
+  <section class="slide" data-notes="Read the agenda aloud. Mention the last block explicitly: 'the last three slides are the questions I expect to be asked — and my answers.' Invites the interviewer to grill you.">
+    <span class="kicker">Agenda</span>
+    <h2 class="slide-title">What we'll cover</h2>
+    <div class="grid cols-4" style="margin-top:14px">
+      <div class="card"><div class="ttl amber">01 · Overview</div><p>Problem, motivation &amp; features</p></div>
+      <div class="card"><div class="ttl">02 · Architecture</div><p>App Router, component split, tech decisions</p></div>
+      <div class="card"><div class="ttl sky">03 · Data</div><p>Typed story model + markdown pipeline</p></div>
+      <div class="card"><div class="ttl violet">04 · i18n &amp; RTL</div><p>Translation design &amp; Arabic typography</p></div>
+      <div class="card"><div class="ttl">05 · Theming &amp; Perf</div><p>Dark mode, fonts, static rendering</p></div>
+      <div class="card"><div class="ttl amber">06 · Engineering</div><p>Git workflow, docs, honest gaps</p></div>
+      <div class="card"><div class="ttl rose">07 · Interview Q&amp;A</div><p>Questions teams actually ask — with answers</p></div>
+      <div class="card"><div class="ttl">08 · Close</div><p>Demo &amp; summary</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 3. PROBLEM ============ -->
+  <section class="slide" data-notes="Frame the problem before the code. Two sentences: religious reading apps often neglect design and bilingual RTL quality; this project proves you can do both. Aim: fast, offline-capable, mobile-friendly, elegant Arabic.">
+    <span class="kicker">01 · Overview</span>
+    <h2 class="slide-title">The problem &amp; the motivation</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="ttl amber">The problem</div>
+        <ul>
+          <li>Inspirational Islamic story content about <em>istighfar</em> is scattered and usually <strong>Arabic-only</strong>.</li>
+          <li>When translated, the reading experience is often an afterthought — especially <strong>RTL layout and Arabic typography</strong>.</li>
+          <li>Audiences switch languages; the app must <strong>mirror perfectly</strong> between RTL and LTR.</li>
+          <li>Readers are often offline or on slow networks — assets must be <strong>self-hosted and optimized</strong>.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ttl">The motivation</div>
+        <ul>
+          <li>Build a polished, <strong>production-ready</strong> bilingual experience — not a toy.</li>
+          <li>Use authenticity as a design constraint: <strong>classic Arabic calligraphy (Amiri)</strong> for story titles, modern geometry (Cairo) for UI.</li>
+          <li>Treat this as a portfolio that shows <strong>real engineering artifacts</strong> — plans, migration docs, convention commits.</li>
+          <li>Prove next-gen React patterns (App Router, Server Components, React 19 idioms) in a real app.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:16px">The story data itself: <strong>11 bilingual stories</strong> curated from the Islamic tradition, categorized across <strong>5 themes</strong>, shipped as structured TypeScript.</p>
+  </section>
+
+  <!-- ============ 4. FEATURES ============ -->
+  <section class="slide" data-notes="Quickly enumerate. For each feature, point to the component that implements it (StoryList, StoryCard, ThemeToggle) so the interviewer can cross-reference with the live demo.">
+    <span class="kicker">01 · Overview</span>
+    <h2 class="slide-title">Features at a glance</h2>
+    <div class="grid cols-3">
+      <div class="card"><div class="ttl">Bilingual toggle</div><p>One state variable switches <code>ar</code>&nbsp;↔&nbsp;<code>en</code> — stories, categories, UI strings, fonts, and text direction flip together.</p></div>
+      <div class="card"><div class="ttl sky">Full RTL / LTR</div><p>Document is root-<code>dir="rtl"</code>; components mirror via <code>dir</code>, logical alignment, and flex flips.</p></div>
+      <div class="card"><div class="ttl amber">5 categories</div><p>Repentance, gratitude, patience, forgiveness, mercy — color-coded badges with light &amp; dark variants.</p></div>
+      <div class="card"><div class="ttl violet">Category filtering</div><p>Sticky pill bar with horizontal scroll (<code>scrollbar-hide</code>), <code>All</code> default, pure client-side filtering.</p></div>
+      <div class="card"><div class="ttl rose">3-mode theming</div><p>Light / Dark / System via <code>next-themes</code>, <code>class</code> strategy, hydration-safe toggle.</p></div>
+      <div class="card"><div class="ttl">Responsive grid</div><p>1 → 2 → 3 columns, <code>line-clamp</code> titles/excerpts, hover elevation &amp; shadow transitions.</p></div>
+    </div>
+    <p class="small muted" style="margin-top:14px">Search, story-detail pages, and URL-based locale routing are planned — see the <strong>Known Gaps</strong> slide.</p>
+  </section>
+
+  <!-- ============ 5. TECH STACK ============ -->
+  <section class="slide" data-notes="Tie each technology to a WHY. If asked 'why not Vite+vendor i18n', you can explain exactly what you gain and what you deferred. Emphasize version freshness: Next 16 / React 19 / TS 6 / Tailwind 4 are current-gen.">
+    <span class="kicker">02 · Architecture &amp; Tech</span>
+    <h2 class="slide-title">Stack — every pick has a reason</h2>
+    <table>
+      <tr><th>Technology</th><th>Version</th><th>Why it was chosen</th></tr>
+      <tr><td><strong>Next.js</strong></td><td>16.2.10</td><td>App Router + Server Components, static export at build, file routing, <code>next/font</code>. One framework for SSR, SSG, and CSR.</td></tr>
+      <tr><td><strong>React</strong></td><td>19.2</td><td>Server/Client component contract, <code>useSyncExternalStore</code>-based hydration patterns.</td></tr>
+      <tr><td><strong>TypeScript</strong></td><td>6.0 <span class="muted">(strict)</span></td><td>Domain types (<code>Story</code>, <code>Language</code>) make impossible states unrepresentable — e.g. a story missing a language won't compile.</td></tr>
+      <tr><td><strong>Tailwind CSS</strong></td><td>4.3</td><td>Utility-first + CSS-first config (<code>@theme inline</code>), no <code>tailwind.config.js</code>; tokens flow from CSS variables.</td></tr>
+      <tr><td><strong>next-themes</strong></td><td>0.4.6</td><td>SSR-safe theming, <code>class</code> strategy, system detection — avoids hydration mismatch.</td></tr>
+      <tr><td><strong>next/font</strong></td><td>built-in</td><td>Self-hosts Amiri + Cairo with <code>preload</code>, <code>display: swap</code>, Arabic-only subsets — offline-capable, zero FOIT.</td></tr>
+      <tr><td><strong>gray-matter + tsx</strong></td><td>dev-only</td><td>Markdown frontmatter parsing + script runner for the content pipeline.</td></tr>
+    </table>
+    <p class="small muted" style="margin-top:10px">Package manager: <strong>pnpm</strong> with a workspaces safety policy (Next 16 bypasses minimum-release-age). Scripts: <code>pnpm dev / build / lint / typecheck</code>.</p>
+  </section>
+
+  <!-- ============ 6. ARCHITECTURE ============ -->
+  <section class="slide" data-notes="Walk the diagram left-to-right. Stress the rule of thumb: smallest interactive island. Only StoryList (language + filter state) and ThemeToggle are client components; the rest render on the server at build time.">
+    <span class="kicker">02 · Architecture</span>
+    <h2 class="slide-title">App Router — one page, clear boundaries</h2>
+
+    <div class="arch-box">
+      <div class="lbl">Server — statically rendered at build time (no dynamic data)</div>
+      <div class="arch-grid">
+        <div class="arch-item"><b>app/layout.tsx</b><span>Root layout · metadata · <code>dir="rtl"</code> · font vars · ThemeProvider</span><div class="badge-holder"><span class="pill">Server</span></div></div>
+        <div class="arch-item"><b>app/page.tsx</b><span>Home page — renders <code>&lt;StoryList /&gt;</code></span><div class="badge-holder"><span class="pill">Server</span></div></div>
+        <div class="arch-item"><b>data/stories.ts</b><span>Typed bilingual content <code>STORIES</code> + <code>CATEGORIES</code></span><div class="badge-holder"><span class="pill">Module</span></div></div>
+        <div class="arch-item"><b>lib/fonts.ts</b><span>Amiri / Cairo via next/font</span><div class="badge-holder"><span class="pill">Module</span></div></div>
+      </div>
+    </div>
+
+    <div class="arch-box">
+      <div class="lbl">Client — the only interactive islands</div>
+      <div class="arch-grid">
+        <div class="arch-item"><b>components/StoryList.tsx</b><span>Owns <code>language</code> + <code>activeCategory</code> state, hero, toggles, grid</span><div class="badge-holder"><span class="pill green">'use client'</span></div></div>
+        <div class="arch-item"><b>components/StoryCard.tsx</b><span>Presentational — badge, read time, line-clamp text</span><div class="badge-holder"><span class="pill">Server-safe</span></div></div>
+        <div class="arch-item"><b>components/ThemeToggle.tsx</b><span>Hydration-safe theme cycling, <code>useMounted</code> via <code>useSyncExternalStore</code></span><div class="badge-holder"><span class="pill green">'use client'</span></div></div>
+        <div class="arch-item"><b>contexts/ThemeProvider.tsx</b><span>Thin wrapper around <code>next-themes</code> for the app tree</span><div class="badge-holder"><span class="pill green">'use client'</span></div></div>
+      </div>
+    </div>
+
+    <p class="small muted">File-based routing keeps structure predictable; everything is pre-rendered → fast first paint, no client data fetching, near-zero client JS outside the islands.</p>
+  </section>
+
+  <!-- ============ 7. DATA LAYER ============ -->
+  <section class="slide" data-notes="This is a favorite question area: 'how does your data model prevent a story missing a translation?' Answer: Record<Language, T> is a total map — the compiler enforces both keys. Highlight optional author (partially populated) and the readTime derived model.">
+    <span class="kicker">03 · Data Layer</span>
+    <h2 class="slide-title">Typed story model — make invalid states unrepresentable</h2>
+    <div class="grid cols-2">
+      <div>
+        <pre data-file="src/types/story.ts"><span class="k">export type</span> <span class="t">StoryCategory</span> = <span class="s">'repentance'</span> | <span class="s">'gratitude'</span>
+  | <span class="s">'patience'</span> | <span class="s">'forgiveness'</span> | <span class="s">'mercy'</span>;
+<span class="k">export type</span> <span class="t">Language</span> = <span class="s">'ar'</span> | <span class="s">'en'</span>;
+
+<span class="k">interface</span> <span class="t">StoryTranslation</span> {
+  title: <span class="t">string</span>; content: <span class="t">string</span>; excerpt: <span class="t">string</span>;
+}
+
+<span class="k">interface</span> <span class="t">Story</span> {
+  id: <span class="t">string</span>;
+  category: <span class="t">StoryCategory</span>;   <span class="c">// unions a free-string bug at build time</span>
+  source: <span class="t">string</span>;
+  author?: <span class="t">string</span>;             <span class="c">// optional — not every story is attributed</span>
+  date: <span class="t">string</span>;
+  readTime: <span class="t">number</span>;             <span class="c">// minutes, derived by the parser</span>
+  translations: <span class="t">Record</span>&lt;<span class="t">Language</span>, <span class="t">StoryTranslation</span>&gt;;
+  <span class="c">// ↑ a total map: 'ar' AND 'en' are required — the compiler checks it</span>
+}</pre>
+        <pre data-file="src/data/stories.ts" style="margin-top:10px"><span class="c">// Categories ship bilingual labels for the same union type</span>
+<span class="k">export const</span> <span class="n">CATEGORIES</span>: <span class="t">CategoryLabel</span>[] = [
+  { id: <span class="s">'repentance'</span>, labelAr: <span class="s">'التوبة'</span>,  labelEn: <span class="s">'Repentance'</span> },
+  { id: <span class="s">'gratitude'</span>, labelAr: <span class="s">'الشكر'</span>,    labelEn: <span class="s">'Gratitude'</span> },
+  { id: <span class="s">'patience'</span>,  labelAr: <span class="s">'الصبر'</span>,    labelEn: <span class="s">'Patience'</span> },
+  { id: <span class="s">'forgiveness'</span>, labelAr: <span class="s">'المغفرة'</span>, labelEn: <span class="s">'Forgiveness'</span> },
+  { id: <span class="s">'mercy'</span>, labelAr: <span class="s">'الرحمة'</span>, labelEn: <span class="s">'Mercy'</span> },
+];</pre>
+      </div>
+      <div>
+        <div class="card">
+          <div class="ttl">Why this model wins</div>
+          <ul>
+            <li><strong>One source of truth per story</strong> — the story owns both languages; views just pick <code>story.translations[language]</code>.</li>
+            <li><strong><code>Record&lt;Language, StoryTranslation&gt;</code> is a total map</strong> — adding a story with a missing language is a <em>compile error</em>, not a runtime surprise.</li>
+            <li><strong>Category is a string-literal union</strong> — typos like <code>'repetance'</code> fail at build time.</li>
+            <li><strong>Presentation data derived upstream</strong>: <code>readTime</code> is computed by the parser (words ÷ 200 wpm), not hand-maintained.</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="ttl amber">Current content</div>
+          <ul>
+            <li><strong>11 stories</strong>, ids <code>'1'</code>–<code>'11'</code>, fully bilingual.</li>
+            <li>Categories today: <span class="chip green">repentance 10</span><span class="chip sky">gratitude 1</span></li>
+            <li>Source lineage documented: <code>stories-md/</code> markdown files.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. CONTENT PIPELINE ============ -->
+  <section class="slide" data-notes="Show the pipeline as a data-flow story: markdown → parser → structured TS. Then honestly note the current state: the shipped stories.ts was curated by hand; the parser outputs an Arabic-only base file. Interviewers respect that you can state exactly what's automated vs manual.">
+    <span class="kicker">03 · Data Pipeline</span>
+    <h2 class="slide-title">From markdown stories to typed data</h2>
+
+    <div class="flow">
+      <div class="node hl"><b>stories-md/*.md</b><span>frontmatter + narrative sections</span></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>gray-matter</b><span>parses YAML frontmatter</span></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>parse-stories.ts</b><span>regex sections + inference</span></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>stories-generated.ts</b><span>typed <code>Story[]</code>, Arabic base</span></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>stories.ts</b><span>hand-curated bilingual</span></div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:12px">
+      <div>
+        <h3>Structured Arabic narrative convention</h3>
+        <div class="flow" style="margin-top:4px">
+          <div class="node"><b>المحنة</b><span>the trial</span></div>
+          <div class="arrow">→</div>
+          <div class="node"><b>نقطة التحول</b><span>turning point</span></div>
+          <div class="arrow">→</div>
+          <div class="node"><b>النتيجة</b><span>outcome</span></div>
+          <div class="arrow">→</div>
+          <div class="node"><b>العبرة</b><span>lesson</span></div>
+        </div>
+        <pre data-file="scripts/parse-stories.ts" style="margin-top:12px"><span class="k">const</span> { data, content } = <span class="n">matter</span>(fileContent);
+<span class="c">// extract sections, then infer the category from Arabic keywords</span>
+<span class="k">const</span> <span class="u">keywords</span>: <span class="t">Record</span>&lt;<span class="t">string</span>, <span class="t">string</span>[]&gt; = {
+  repentance: [<span class="s">'توب'</span>, <span class="s">'ذنب'</span>, <span class="s">'استغفار'</span>, <span class="s">'غفار'</span>],
+  gratitude:  [<span class="s">'شكر'</span>, <span class="s">'نعمة'</span>, <span class="s">'حمد'</span>],
+  patience:   [<span class="s">'صبر'</span>, <span class="s">'محنة'</span>, <span class="s">'ابتلاء'</span>],
+  // ...
+};
+<span class="k">const</span> <span class="u">readTime</span> = <span class="n">Math</span>.<span class="n">ceil</span>(wordCount / <span class="t">200</span>); <span class="c">// ~200 wpm model</span></pre>
+      </div>
+      <div class="card">
+        <div class="ttl amber">Engineering honesty</div>
+        <ul>
+          <li><strong>13 markdown files</strong> exist; <strong>11 follow the standard narrative pattern</strong>.</li>
+          <li>2 files (<code>قصة_خالد</code>, <code>قصة_سارة</code>) use a non-standard format — documented as remaining work in the migration plan.</li>
+          <li>Parser emits <strong>Arabic-only base</strong>; the English side is authored and maintained with bilingual quality control.</li>
+          <li>The whole process is governed by a written plan: <code>docs/STORIES_MIGRATION_PLAN.md</code> with a verification gate (lint + typecheck + build).</li>
+        </ul>
+        <p class="small muted" style="margin-top:8px">Documenting data lineage and knowing what is / isn't automated is the kind of artifact teams want to see.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. I18N ============ -->
+  <section class="slide" data-notes="Be ready to defend this: 'why not next-intl + URL segments now?' Answer: the stories ARE the content and each already carries both languages; client state gives instant switching with zero routing cost, correct for this scale. Then show you know the real-world upgrade path.">
+    <span class="kicker">04 · i18n &amp; RTL</span>
+    <h2 class="slide-title">Translation layer — data-driven, today</h2>
+
+    <div class="grid cols-2">
+      <div>
+        <pre data-file="src/components/StoryList.tsx"><span class="k">const</span> [language, setLanguage] =
+  <span class="n">useState</span>&lt;<span class="t">Language</span>&gt;(<span class="s">'ar'</span>);
+<span class="k">const</span> isRtl = language === <span class="s">'ar'</span>;
+
+<span class="k">&lt;div</span> dir={isRtl ? <span class="s">'rtl'</span> : <span class="s">'ltr'</span>}
+     className={isRtl ? <span class="s">'font-arabic'</span> : <span class="s">'font-sans'</span>}<span class="k">&gt;</span>
+  <span class="k">&lt;button</span> onClick={() =&gt; setLanguage(<span class="s">'ar'</span>)}<span class="k">&gt;</span>العربية<span class="k">&lt;/button&gt;</span>
+  <span class="k">&lt;button</span> onClick={() =&gt; setLanguage(<span class="s">'en'</span>)}<span class="k">&gt;</span>English<span class="k">&lt;/button&gt;</span>
+<span class="k">&lt;/div&gt;</span></pre>
+        <p class="small muted" style="margin-top:6px">UI strings use inline ternaries; categories use <code>labelAr/labelEn</code>; content uses <code>story.translations[language]</code>.</p>
+      </div>
+      <div>
+        <div class="card">
+          <div class="ttl">Why this design (for now)</div>
+          <ul>
+            <li><strong>Zero routing complexity</strong> — switching is a state change, no navigation or cache refetch.</li>
+            <li><strong>Compile-time completeness</strong> — the type system guarantees both languages on every story.</li>
+            <li><strong>Right-sized for 11 stories</strong> — a full locale pipeline would be speculative complexity (YAGNI).</li>
+          </ul>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="ttl amber">The upgrade path — when scale demands it</div>
+          <ul>
+            <li>Move UI strings to <strong>locale files</strong> (<code>locales/ar.json</code>, <code>en.json</code>) + a typed dictionary.</li>
+            <li>Adopt <strong>URL-based locale segments</strong> (<code>/en/…</code>, <code>/ar/…</code>) for per-language SEO &amp; caching.</li>
+            <li>Use a standard lib (<code>next-intl</code>) for pluralization, formatting, and locale middleware.</li>
+            <li>Keep <code>dir</code> / font logic — that work is already separated and reusable.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. RTL TYPOGRAPHY ============ -->
+  <section class="slide" data-notes="Deep-dive signal. Show you understand that RTL is not 'mirror the CSS' — it's text direction, flex/grid auto-flip, logical margins, and typography choices. Mention the documented font plan as an artifact.">
+    <span class="kicker">04 · i18n &amp; RTL</span>
+    <h2 class="slide-title">RTL engineering &amp; Arabic typography</h2>
+
+    <div class="grid cols-2">
+      <div>
+        <h3>Direction handling</h3>
+        <ul>
+          <li>Root document: <code>&lt;html lang="ar" dir="rtl"&gt;</code> — SSR output is RTL-first.</li>
+          <li>Container <code>dir</code> flips <strong>for free</strong>: flex order, grid flow, text alignment, inline start/end.</li>
+          <li>Where automatic flipping isn't enough we flip explicitly: <code>flex-row-reverse</code>, <code>order-first</code>, <code>mr-auto ⇄ ml-auto</code>.</li>
+          <li>Read-time badge uses <code>order-first</code> so the visual rhythm stays correct in both directions.</li>
+        </ul>
+        <h3>Typography strategy</h3>
+        <table>
+          <tr><th>Role</th><th>Font</th><th>Why</th></tr>
+          <tr><td>Headings / story titles</td><td><strong>Amiri</strong> (classic Naskh calligraphy)</td><td>Authentic Islamic reading feel</td></tr>
+          <tr><td>UI / body</td><td><strong>Cairo</strong> (modern geometric)</td><td>Clean, readable, contemporary</td></tr>
+        </table>
+      </div>
+      <div>
+        <pre data-file="src/lib/fonts.ts"><span class="k">export const</span> <span class="n">amiri</span> = <span class="n">Amiri</span>({
+  subsets: [<span class="s">'arabic'</span>],           <span class="c">// only Arabic glyphs — smaller payload</span>
+  weight: [<span class="s">'400'</span>, <span class="s">'700'</span>],
+  variable: <span class="s">'--font-amiri'</span>,     <span class="c">// exposed as a CSS var</span>
+  display: <span class="s">'swap'</span>,              <span class="c">// no invisible text (FOIT)</span>
+  preload: <span class="t">true</span>,
+});
+
+<span class="k">export const</span> <span class="n">cairo</span> = <span class="n">Cairo</span>({
+  subsets: [<span class="s">'arabic'</span>],
+  weight: [<span class="s">'400'</span>,<span class="s">'500'</span>,<span class="s">'600'</span>,<span class="s">'700'</span>],
+  variable: <span class="s">'--font-cairo'</span>,
+  display: <span class="s">'swap'</span>, preload: <span class="t">true</span>,
+});</pre>
+        <pre data-file="src/app/globals.css" style="margin-top:8px"><span class="n">.font-arabic</span> { <span class="c">/* Amiri for narrative */</span>
+  font-family: var(--font-amiri), <span class="s">'Noto Sans Arabic'</span>, serif;
+  line-height: <span class="t">1.8</span>;              <span class="c">// breathing room for Arabic script</span>
+}
+<span class="n">.font-arabic-ui</span> { <span class="c">/* Cairo for UI */</span>
+  font-family: var(--font-cairo), system-ui, sans-serif;
+  line-height: <span class="t">1.6</span>;
+}</pre>
+        <p class="small muted" style="margin-top:6px">The full rationale + alternative approaches live in <code>docs/ARABIC_FONT_PLAN.md</code> — a real decision record.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. THEMING ============ -->
+  <section class="slide" data-notes="This slide shows a modern React 19 idiom: preventing hydration mismatch with useSyncExternalStore instead of useEffect + mounted flag. Explain WHY: on the server snapshot returns false → skeleton; after hydration the client snapshot returns true → real button. No post-hydration re-render flash.">
+    <span class="kicker">05 · Theming &amp; Performance</span>
+    <h2 class="slide-title">Dark mode without hydration mismatches</h2>
+
+    <div class="grid cols-2">
+      <div>
+        <pre data-file="src/components/ThemeToggle.tsx"><span class="k">const</span> emptySubscribe = () =&gt; () =&gt; {};
+
+<span class="k">function</span> <span class="n">useMounted</span>() {
+  <span class="k">return</span> <span class="n">useSyncExternalStore</span>(
+    emptySubscribe,     <span class="c">// subscribe — never changes</span>
+    () =&gt; <span class="t">true</span>,       <span class="c">// client snapshot  → mounted</span>
+    () =&gt; <span class="t">false</span>       <span class="c">// server snapshot  → skeleton</span>
+  );
+}
+
+<span class="k">const</span> { theme, setTheme, resolvedTheme } = <span class="n">useTheme</span>();
+<span class="k">const</span> mounted = <span class="n">useMounted</span>();
+
+<span class="k">if</span> (!mounted) <span class="k">return</span>
+  <span class="k">&lt;div</span> className=<span class="s">"animate-pulse …"</span> /&gt;; <span class="c">// matches SSR output</span></pre>
+      </div>
+      <div>
+        <div class="card">
+          <div class="ttl">Theming architecture</div>
+          <ul>
+            <li><strong><code>next-themes</code></strong> with <code>attribute="class"</code>, <code>defaultTheme="system"</code>, <code>enableSystem</code>.</li>
+            <li><strong>CSS-variable driven</strong>: <code>:root</code> = light tokens, <code>.dark</code> overrides, mapped to Tailwind via <code>@theme inline</code>.</li>
+            <li><strong>No FOUC / flash of wrong theme</strong>: <code>color-scheme</code> set per theme + <code>suppressHydrationWarning</code>.</li>
+            <li>Accessible: the toggle exposes a detailed <code>aria-label</code> describing current vs. system theme.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <pre data-file="src/app/globals.css" style="margin-top:12px"><span class="n">:root</span> {
+  --background: #ffffff;  --foreground: #171717;
+  --primary: #16a34a;     --accent: #22c55e;
+}
+<span class="n">.dark</span> {
+  --background: #0f172a;  --foreground: #f8fafc;
+  --primary: #22c55e;     --accent: #16a34a;
+}
+@theme inline {                <span class="c">// Tailwind v4: CSS vars → utility tokens</span>
+  --color-background: var(--background);
+  --color-primary: var(--primary);
+  /* … so bg-background / text-foreground / bg-primary all resolve */
+}</pre>
+  </section>
+
+  <!-- ============ 12. PERFORMANCE ============ -->
+  <section class="slide" data-notes="Link every optimization to a real mechanism: static render (no dynamic data), font subsetting (arabic only), preload + swap (removes FOIT), few client islands (small hydration). If asked for numbers, run Lighthouse in the demo.">
+    <span class="kicker">05 · Theming &amp; Performance</span>
+    <h2 class="slide-title">Performance — defaults chosen deliberately</h2>
+
+    <div class="grid cols-2">
+      <div class="card"><div class="ttl">Static by default</div><p>The app has <strong>no dynamic data</strong> — no DB, no API, no cookies in content. Every page is pre-rendered at build time; CDN edge serves static HTML.</p></div>
+      <div class="card"><div class="ttl">Fonts, optimized</div><p><code>next/font</code> self-hosts at build, serves <strong>Arabic subsets only</strong>, sets <code>display: swap</code> → near-zero FOIT, works <strong>offline</strong>. ~220&nbsp;KB font budget documented in the plan.</p></div>
+      <div class="card"><div class="ttl">Small client JS</div><p>Only two client islands (<code>StoryList</code>, <code>ThemeToggle</code>) hydrate; the rest of the tree stays server-rendered. Filter/language work happens without network round-trips.</p></div>
+      <div class="card"><div class="ttl">Rendering discipline</div><p>Titles/excerpts use <code>line-clamp</code> to keep cards uniform; <code>scroll-behavior: smooth</code>; CSS-only theme transition (0.2s) avoids reflow-heavy JS.</p></div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="ttl amber">The mental model — when each rendering mode applies</div>
+      <table>
+        <tr><th>Mode</th><th>When</th><th>This app</th></tr>
+        <tr><td><strong>SSG</strong></td><td>Content known at build time</td><td><span class="accent">✓ stories render at build</span></td></tr>
+        <tr><td><strong>SSR</strong></td><td>Request-dependent HTML (auth, personalization)</td><td>— (not needed today)</td></tr>
+        <tr><td><strong>CSR</strong></td><td>Post-hydration interactivity</td><td><span class="accent">✓ language/filter/theme islands</span></td></tr>
+        <tr><td><strong>ISR</strong></td><td>Semi-frequent content updates</td><td>— (future: new stories without full rebuild)</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 13. ENGINEERING PRACTICES ============ -->
+  <section class="slide" data-notes="Position yourself as a professional: this isn't a random repo, it has conventions, docs, and a clean git story. Mention AGENTS.md as a developer-onboarding asset, and the Next 16 upgrade PR as proof you keep dependencies current.">
+    <span class="kicker">06 · Engineering Practices</span>
+    <h2 class="slide-title">Ship like a team of one, reviewable by teams</h2>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="ttl">Git &amp; workflow</div>
+        <ul>
+          <li><strong>Conventional Commits</strong>: <code>feat</code>, <code>fix</code>, <code>docs</code>, <code>chore</code>, <code>refactor</code>…</li>
+          <li><strong>Branch naming</strong>: <code>feat/*</code>, <code>fix/*</code>, <code>chore/*</code> — PR-based merges.</li>
+          <li>Recent history:<br><code style="font-size:0.78rem">feat: add 11 Islamic stories with bilingual support<br>feat: add beautiful offline Arabic fonts (Amiri &amp; Cairo)<br>fix: add click handler to Read more button<br>chore: upgrade to Next.js 16 and modernize toolchain (#2)</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ttl">Quality gates</div>
+        <ul>
+          <li><code>pnpm lint</code> — ESLint 9 + <code>eslint-config-next</code></li>
+          <li><code>pnpm typecheck</code> — <code>tsc --noEmit</code>, <code>strict</code></li>
+          <li><code>pnpm build</code> — full production build; migration plan records all three passing together.</li>
+          <li><strong>AGENTS.md</strong> — encodes project docs, conventions, and scripts for future tooling &amp; contributors.</li>
+        </ul>
+      </div>
+      <div class="card" style="grid-column:1 / -1">
+        <div class="ttl amber">Example — the Next.js 16 modernization</div>
+        <p>Upgraded the whole toolchain deliberately (Next 16, React 19, Tailwind v4 CSS-first config, TS 6, ESLint 9) as a single PR with a pnpm release-age policy to adopt the fresh release — evidence of <strong>staying current instead of deferring framework debt</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 14. KNOWN GAPS ============ -->
+  <section class="slide" data-notes="Deliver this with confidence — owning gaps is senior behavior. Steering phrase: 'Here's what this project does NOT do yet, and what I'd do about each.' This pre-empts the 'what would you improve?' question.">
+    <span class="kicker">06 · Engineering Practices</span>
+    <h2 class="slide-title">What it doesn't do yet — and the plan for each</h2>
+
+    <div class="grid cols-2">
+      <div class="card"><div class="ttl rose">No story-detail page</div><p>Each story's full <code>content</code> is stored but <strong>not rendered</strong>; "Read more" is not yet wired to a route. <em>Plan:</em> a dynamic <code>app/stories/[id]</code> route with <code>generateStaticParams</code> + <code>generateMetadata</code> for per-story SEO.</p></div>
+      <div class="card"><div class="ttl rose">No search yet</div><p>README advertises search/filter; only category filtering shipped. <em>Plan:</em> debounced client-side search over titles/excerpts → then move to server/edge search when story count grows.</p></div>
+      <div class="card"><div class="ttl amber">No locale-file i18n</div><p><code>src/locales/</code> is referenced in docs but not built; UI strings are inline ternaries. <em>Plan:</em> the upgrade path on the i18n slide.</p></div>
+      <div class="card"><div class="ttl amber">2 of 13 source stories un-converted</div><p><code>قصة_خالد.md</code> and <code>قصة_سارة.md</code> don't match the standard narrative pattern. <em>Plan:</em> manual conversion, then re-run the parser.</p></div>
+      <div class="card"><div class="ttl">SEO is minimal</div><p>Static metadata only — no <code>sitemap.ts</code>, <code>robots.ts</code>, OpenGraph, or JSON-LD. <em>Plan:</em> add them alongside story-detail pages; OG images per story.</p></div>
+      <div class="card"><div class="ttl">No tests yet</div><p>Gates are lint + typecheck + build. <em>Plan:</em> Vitest + Testing Library for the client islands; unit tests for the markdown parser (great failure cases: missing sections, no frontmatter).</p></div>
+      <div class="card" style="grid-column:1 / -1">
+        <div class="ttl green">Why show this?</div>
+        <p>Because a candidate who can list their gaps <strong>and</strong> the concrete next steps reads as self-aware and senior. Bonus: a <code>pwa-branch</code> already exists on the remote — offline reading is a real next milestone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 15. Q&A 1 ============ -->
+  <section class="slide" data-notes="Go slide-by-slide, answer in 45–60s each. The interviewer will likely only choose a few — depth matters more than coverage. Speaking tips in italics inside the answers.">
+    <span class="kicker">07 · Interview Q&amp;A — Rendering &amp; React</span>
+    <h2 class="slide-title">Rendering &amp; React — expected questions</h2>
+
+    <div class="qa"><div class="q">Why Next.js instead of Vite + React or a static site generator?</div><ul>
+      <li>I get SSG/SSR/CSR/ISR under one framework; here <strong>SSG at build time</strong> is a zero-cost default because there's no request-dependent data.</li>
+      <li>Server Components mean my content model is <strong>typed at the source</strong>, nearest to the data — no 'fetch-then-render' ceremony.</li>
+      <li>Built-ins I actually use: <code>next/font</code>, <code>Metadata</code> API, file-based routes. A Vite SPA would re-implement routing, SEO metadata, and font optimization.</li>
+      <li><em>Answer length: 30s. Don't list every feature — tie to THIS app.</em></li>
+    </ul></div>
+
+    <div class="qa"><div class="q">Explain how you split Server vs Client components — what's your rule?</div><ul>
+      <li><strong>The smallest interactive island.</strong> A component is a Client Component <em>only</em> if it holds state, handles events, or uses browser APIs (theme, scroll).</li>
+      <li><code>StoryList</code> (language + filter state), <code>ThemeToggle</code>, <code>ThemeProvider</code> are marked <code>'use client'</code>. Everything else renders on the server.</li>
+      <li>Consequence: StoryCard stays server-renderable — a <strong>pure</strong> presentational component I could even extract to a shared UI package.</li>
+      <li>This minimizes hydration work and keeps most of the page as static HTML.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">What is hydration, and what hydration pitfalls did you handle?</div><ul>
+      <li>Hydration = React re-running the component tree in the browser on top of server-generated HTML and attaching event handlers/state.</li>
+      <li>Pitfall 1 — <strong>theme FOUC/mismatch</strong>: the server doesn't know the visitor's system theme; solved with <code>next-themes</code> + <code>suppressHydrationWarning</code> + rendering a skeleton until mounted.</li>
+      <li>Pitfall 2 — <strong>mounted-state</strong>: I avoid <code>useEffect</code> for "am I mounted?" and use <code>useSyncExternalStore</code> instead — server snapshot <code>false</code>, client snapshot <code>true</code>, so server and first client render agree.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">Why is the language state client-side rather than URL-based / server-side?</div><ul>
+      <li>This scale: switching must be <strong>instant</strong>; a route change + re-fetch is unnecessary since content lives in the bundle and both locales ship.</li>
+      <li>Downside admitted: no per-locale URLs → weaker SEO, no deep-linking a language. The <strong>upgrade path</strong> (locale segments via <code>next-intl</code>) is designed and documented.</li>
+      <li>Decision was deliberate: optimize for UX now, SEO when the story count justifies it — a YAGNI call.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">React 19 — anything you use that wasn't available before?</div><ul>
+      <li>Server Components are the biggest shift I leverage daily (RSC is the default in the App Router).</li>
+      <li><code>useSyncExternalStore</code> for hydration-safe mounted detection — a first-class API replacing a <code>useEffect</code> workaround.</li>
+      <li>The upgrade to Next 16 brought React 19 into the whole toolchain (types, lint, Tailwind v4 pairing).</li>
+    </ul></div>
+  </section>
+
+  <!-- ============ 16. Q&A 2 ============ -->
+  <section class="slide" data-notes="Half the battle in RTL questions is vocabulary: logical properties, inline-start/end, direction vs block flow. Use the concrete StoryCard flips as evidence you've debugged it.">
+    <span class="kicker">07 · Interview Q&amp;A — Tailwind, RTL, Performance</span>
+    <h2 class="slide-title">Tailwind, RTL, &amp; performance — expected questions</h2>
+
+    <div class="qa"><div class="q">Tailwind v4 is CSS-first — how is that different, and do you like it?</div><ul>
+      <li>v3: <code>tailwind.config.js</code> + JS-extracted theme. v4: <strong>CSS-first</strong> — <code>@import "tailwindcss"</code>, theme defined via <code>@theme</code>, native CSS variables everywhere.</li>
+      <li>I map semantic tokens once: <code>@theme inline { --color-primary: var(--primary); }</code> → then write utilities like <code>bg-primary</code> that follow the actual CSS variable, so <strong>dark mode is just a variable swap</strong>.</li>
+      <li>Build is now a single PostCSS plugin (<code>@tailwindcss/postcss</code>), no config file churn. Prefer it — less tooling indirection.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">How does next/font beat a Google Fonts &lt;link&gt;?</div><ul>
+      <li><code>next/font</code> <strong>self-hosts at build</strong> → no runtime third-party request (privacy + reliability), files go through Next's caching/CDN.</li>
+      <li>I subset to <strong>Arabic glyphs only</strong>, preload critical weights, and set <code>display: swap</code> → no invisible text while loading.</li>
+      <li>Fonts are hashed and load with the page's own network priorities — measurable on Lighthouse font metrics.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">What specifically breaks in RTL if you only mirror the CSS?</div><ul>
+      <li>"Mirroring" fails at <strong>direction vs. block flow</strong>: with <code>dir="rtl"</code> the inline axis flips but vertical layout doesn't — so flex/grid auto-flip is usually right, but <strong>explicit margins/absolute positioning don't follow</strong>.</li>
+      <li>Padding/margins should use <strong>logical properties</strong> (<code>ms-*</code>/<code>me-*</code>, <code>ps-*</code>/<code>pe-*</code>) not physical (<code>ml</code>/<code>mr</code>). I flip the story footer with <code>flex-row-reverse</code> + <code>order-first</code> where direction alone isn't enough.</li>
+      <li>Line-height and letter-spacing choices differ for Arabic script — a reason typography gets its own documented plan.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">Your performance wins — rank them by impact.</div><ul>
+      <li><strong>1. Static rendering</strong> — the whole page is HTML at the edge, nothing to fetch/render per request.</li>
+      <li><strong>2. Small hydration surface</strong> — two client islands ≈ minimal JavaScript on the wire.</li>
+      <li><strong>3. Font subsetting + swap</strong> — removes render-blocking FOIT for Arabic text (LCP-affecting).</li>
+      <li><strong>4. Self-hosted assets</strong> — offline, no external dependency for core visuals.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">How would you scale this to 10,000 stories?</div><ul>
+      <li><strong>Data:</strong> move markdown → a content source (CMS / content layer like Contentlayer or MDX remote), or filesystem collection with caching.</li>
+      <li><strong>Rendering:</strong> per-story <code>generateStaticParams</code> + ISR — revalidate only changed stories instead of a full build; add <strong>search</strong> (edge index, e.g. Meilisearch/Typesense) and pagination.</li>
+      <li><strong>i18n:</strong> switch to URL locale segments so each language is its own cacheable static set.</li>
+      <li><strong>Images:</strong> per-story OG images generated at build. Content pipeline becomes the release gate (parser + validation + typed output).</li>
+    </ul></div>
+  </section>
+
+  <!-- ============ 17. Q&A 3 ============ -->
+  <section class="slide" data-notes="The last block sells seniority: system design + behavioral. If asked a behavioral question, use STAR and anchor to a concrete repo decision. The 'reversed decision' answer is your i18n-on-client call — honest, revisited, documented.">
+    <span class="kicker">07 · Interview Q&amp;A — Design &amp; Behavioral</span>
+    <h2 class="slide-title">System design &amp; behavioral — expected questions</h2>
+
+    <div class="qa"><div class="q">Add user accounts + "saved stories". What's your plan?</div><ul>
+      <li><strong>Auth:</strong> NextAuth/Auth.js with email + OAuth; server-side session cookie; protect the saved-stories API.</li>
+      <li><strong>Data:</strong> a relational model — <code>User</code> ↔ <code>SavedStory</code> (userId, storyId, createdAt); no user PII in story content.</li>
+      <li><strong>Architecture:</strong> keep the story catalog static/cached; only saved-stories is dynamic → a single route group with per-user data keeps the static story pages untouched. Rationale: don't turn a static site dynamic globally for one feature.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">Full i18n routing — walk me through the migration.</div><ul>
+      <li>Restructure to <code>app/[locale]/…</code> with a <code>next-intl</code> middleware detecting <code>Accept-Language</code> and cookie; always redirect to a locale-prefixed URL (<code>/ar/…</code>, <code>/en/…</code>).</li>
+      <li>Keep my current model: <strong>stories carry both translations</strong> — only UI strings move to locale dictionaries. Content locale comes from the URL segment, not client state.</li>
+      <li>Add <code>hreflang</code> + <code>alternate</code> links for SEO parity between locales; set <code>lang</code>/<code>dir</code> per route segment.</li>
+      <li>Testing matrix: RTL×LTR × light×dark × each locale — every combination is a screenshot edge case.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">How do you QA bilingual + RTL + theming combinations automatically?</div><ul>
+      <li><strong>Parser unit tests</strong> first (frontmatter variants, missing sections, Arabic keyword inference) — the content pipeline is the riskiest untested code today.</li>
+      <li>Component tests (Vitest + Testing Library) for StoryList and ThemeToggle: language toggle, filter logic, mounted skeleton.</li>
+      <li><strong>Visual regression</strong> (Playwright snapshots) across a matrix of dir × theme × viewport — this is what actually catches RTL/LTR asymmetry I shipped by hand.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">Tell me about a design decision you made, then changed.</div><ul>
+      <li>Example: I chose <strong>client-side language state</strong> to ship fast and keep switching instant. Revisiting for SEO/publishing, I'd move to URL locale segments.</li>
+      <li>Why it's defensible: the constraint was <em>prototype velocity + type safety</em>; the design kept <strong>UI strings, category labels, and content lookup separable</strong>, so the migration is localized rather than a rewrite.</li>
+      <li>I write decision records (docs/) precisely so I can revisit a choice with its original reasoning intact.</li>
+    </ul></div>
+
+    <div class="qa"><div class="q">You have 3 months. What do you build next, in order?</div><ul>
+      <li><strong>Weeks 1–4:</strong> story-detail pages + per-story SEO + OG images; convert the 2 remaining markdown files; add parser unit tests.</li>
+      <li><strong>Weeks 5–8:</strong> locale-URL i18n migration + search; both unlock the app's reach.</li>
+      <li><strong>Weeks 9–12:</strong> visual regression suite, PWA offline reading (the <code>pwa-branch</code>), then ship a public content pipeline so contributors add stories via PR.</li>
+    </ul></div>
+  </section>
+
+  <!-- ============ 18. CLOSE ============ -->
+  <section class="slide" data-notes="Aim for a crisp close. Run the live demo (language toggle, category filter, theme cycle, mobile width). Then invite pushback — 'what would you have done differently?' is a signal you welcome scrutiny.">
+    <span class="kicker">08 · Close</span>
+    <h2 class="slide-title">Summary &amp; demo</h2>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="ttl">What this project proves</div>
+        <ul>
+          <li><strong>Bilingual by design</strong>: typed translations, full RTL/LTR mirroring, curated Arabic typography.</li>
+          <li><strong>Modern React discipline</strong>: Server Components, minimal client islands, React 19 hydration patterns.</li>
+          <li><strong>Engineering artifacts</strong>: migration plan, font decision record, conventional-commit history.</li>
+          <li><strong>Honest roadmap</strong>: known gaps with concrete, prioritized next steps.</li>
+        </ul>
+        <div class="badge-holder" style="margin-top:10px">
+          <span class="pill green">11 stories</span><span class="pill sky">2 languages</span>
+          <span class="pill amber">5 categories</span><span class="pill violet">3 themes</span>
+          <span class="pill rose">100% static render</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ttl amber">Live demo</div>
+        <ul>
+          <li>Language toggle → watch every card, filter, and font flip direction.</li>
+          <li>Category pills → client-side filter, no reload.</li>
+          <li>Theme cycle (light → dark → system) → token swap via CSS variables.</li>
+          <li>Narrow the window → 3-2-1 column grid and horizontal filter scroll.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top:18px; text-align:center" class="strong">Thank you — happy to go deeper on any layer. <span class="muted" style="font-weight:400">(React internals, i18n routing, content pipeline, or scale paths.)</span></p>
+  </section>
+
+</main>
+
+<footer class="hint">←&nbsp;→ navigate · N presenter notes · F fullscreen · P print → PDF</footer>
+
+<div id="notes" class="">
+  <h5>Presenter notes</h5>
+  <p id="notesText"></p>
+</div>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const notesPanel = document.getElementById('notes');
+  const notesText = document.getElementById('notesText');
+  const notesBtn = document.getElementById('notesBtn');
+  let current = 0;
+  let notesOpen = false;
+
+  function show(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+    const notes = slides[current].dataset.notes;
+    notesText.textContent = notes || '(no notes for this slide)';
+    if (document.title) {
+      const t = slides[current].querySelector('.slide-title, h1');
+      const k = slides[current].querySelector('.kicker');
+      document.title = (k && k.textContent.trim() ? k.textContent.trim().split('·')[0].trim() + ' · ' : '') +
+        (t ? t.textContent.trim() : 'Istigfar-Stories') + ' — Interview Deck';
+    }
+    const el = slides[current];
+    el.scrollTop = 0;
+  }
+
+  function openNotes() {
+    notesOpen = !notesOpen;
+    notesPanel.classList.toggle('open', notesOpen);
+    notesBtn.textContent = notesOpen ? 'Hide Notes' : 'Notes  N';
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.target && e.target.matches && e.target.matches('input, textarea, select')) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    switch (e.key) {
+      case 'ArrowRight': case 'PageDown': case ' ':
+        e.preventDefault(); show(current + 1); break;
+      case 'ArrowLeft': case 'PageUp':
+        e.preventDefault(); show(current - 1); break;
+      case 'Home': e.preventDefault(); show(0); break;
+      case 'End': e.preventDefault(); show(slides.length - 1); break;
+      case 'n': case 'N': openNotes(); break;
+      case 'f': case 'F':
+        if (document.fullscreenEnabled) {
+          if (document.fullscreenElement) document.exitFullscreen();
+          else document.documentElement.requestFullscreen();
+        }
+        break;
+    }
+  });
+
+  let touchX = null;
+  document.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    touchX = null;
+  }, { passive: true });
+
+  notesBtn.addEventListener('click', openNotes);
+  show(0);
+})();
+</script>
+
+</body>
+</html>
