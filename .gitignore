@@ -2,3 +2,9 @@ node_modules
 .next
 tsconfig.tsbuildinfo
 graphify-out
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
